@@ -1,0 +1,16 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" 
+                controller="NewCampaignController">
+     <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    
+        <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+
+    <h2>Recent Campaigns</h2> 
+	<div style="height: 300px">
+        <lightning:datatable
+                keyField="id"
+                data="{! v.data }"
+                columns="{! v.columns }"
+                hideCheckboxColumn="true"/>
+    </div>
+</aura:component>

@@ -1,0 +1,51 @@
+.slds-box{
+    margin-block: 10px;
+    margin-left: 6px;
+    margin-right: 10px;
+    width: 266px;
+}
+
+.ContactIndexing{
+    font-size: 10px;
+    top: 0;
+    padding-bottom: 8px;
+    margin-top: 0px;
+}
+
+.prev{
+    position: absolute;
+    left: 0;
+    text-align: center;
+    top: 50%;
+    margin: 10px;
+
+}
+.next{
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 50%;
+    margin: 10px;
+}
+
+.dot{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #bbb;
+    margin: 0 2px;
+    display: inline-block;
+}
+
+.dotActive{
+    background-color: #717171;
+}
+
+.dot:hover{
+    background-color: #717171;
+}
+
+/* ::-webkit-scrollbar {
+    width: 3px;
+} */

@@ -1,0 +1,110 @@
+<!-- sldsValidatorIgnore -->
+<template>
+
+    <template if:true={AccountInfo}>
+        <lightning-card title="Account Information">
+            <lightning-avatar src={AccountInfo.PhotoUrl}>
+            </lightning-avatar>
+            <div class="slds-float_right">
+                <lightning-button variant="brand" label="Add new Contact"  
+                icon-name="utility:add" class="slds-var-m-left_x-small" onclick={openModal}></lightning-button>
+                <template if:true={deleteButton}>
+                <lightning-button variant="destructive" label="Delete Contact"  
+                icon-name="utility:delete" class="slds-var-m-left_x-small" onclick={openDelete}></lightning-button>
+            </template>
+            </div>
+            <div class="slds-grid slds-wrap ">
+                <div class="slds-col slds-size_1-of-3 slds-float_left">
+                    <div class="compactLayout1">
+                        <p>Record Id : {recordId}</p>
+                        <p>Name : {AccountInfo.Name}</p>
+                        <p>Website : {AccountInfo.Website}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <div class="compactLayout2">
+                        <p>Phone : {AccountInfo.Phone}</p>
+                        <p>Fax : {AccountInfo.Fax}</p>
+                        <p>Account Type : {AccountInfo.Type}</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-3 ">
+                    <div class="compactLayout3">
+                        <p>Account Owner : {AccountInfo.Owner.Name}</p>
+                        <p>Created By : {AccountInfo.CreatedBy.Name}</p>
+                        <p>Last Modified By : {AccountInfo.LastModifiedBy.Name}</p>
+                    </div>
+                </div>
+            </div>
+            <div class ="select">
+            <template if:true={contactSelected}>
+                <div class="contactSelected">
+                    <h1>Contact selected are : <b>{contactSelected.selectedRecords}</b></h1>
+                </div>
+            </template>
+        </div>
+        </lightning-card>
+       
+        <template if:true={recordId}>
+            <c-child-contact-info parent-account-id={recordId} onselectedcontacts={handleContactSelection}
+            oncontactcreate={contactcreate} >
+            </c-child-contact-info>
+        </template>
+    </template>
+    <template if:true={isDelete}>
+        
+        <div class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Are you sure you want to Delete?</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                <div class="slds-align_absolute-center" style="height:2rem">
+                <h1><b>{contactSelected.selectedRecords}</b></h1>
+                </div>
+                        </div>
+            <footer class="slds-modal__footer">
+                <div class="slds-align_absolute-center">
+                <lightning-button variant="brand" icon-name="utility:delete" label ="Delete" onclick={Delcontacts} title="OK">OK</lightning-button>
+                <lightning-button variant="destructive" icon-name="utility:close" label="Close" onclick={closeDelete} title="Cancel">Cancel</lightning-button>
+            </div>
+            </footer>
+        </div>
+    </div>
+    </template>
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" 
+        class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create Contact</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-record-edit-form
+                    object-api-name="Contact"
+                    onsuccess={handleSuccess}>
+                    <lightning-messages></lightning-messages>
+                    <div class="slds-m-around_medium">
+                        <lightning-input-field field-name="Name"></lightning-input-field>
+                        <lightning-input-field field-name="Phone"></lightning-input-field>
+                        <lightning-input-field field-name="Email"></lightning-input-field>
+                        <div class="slds-m-top_medium">
+                        </div>
+                    </div>
+                </lightning-record-edit-form>
+            </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <div class="slds-align_absolute-center">
+                    <lightning-button variant="brand" icon-name="utility:new" label ="Create" onclick={submitDetails} title="OK">OK</lightning-button>
+                    <lightning-button variant="destructive" icon-name="utility:close" label="Close" onclick={closeModal} title="Cancel">Cancel</lightning-button>
+                </div>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>

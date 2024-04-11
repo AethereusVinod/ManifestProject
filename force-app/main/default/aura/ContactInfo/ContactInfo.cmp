@@ -1,0 +1,43 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" controller="ContactInfoController">
+    <aura:attribute name="accList" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="cColumns" type="List"/>
+    <aura:attribute name="ContactList" type="List"/>
+        <aura:attribute name="SelectedAccounts" type="List"/>
+            <aura:attribute name="ContInfo" type="Boolean"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="activeSections" type="List" />
+    <aura:attribute name="searchResult" type="List" description="use for store and display account list return from server"/>
+    <aura:attribute name="searchKeyword" type="String" description="use for store user search input"/>
+    
+    <div class="slds-border_bottom">
+        <h1>Accounts</h1>
+    </div>
+    <div class="slds-scrollable_y">
+        <div class="slds-text-longform">
+            <lightning:input value="{!v.searchKeyword}"
+                             placeholder="search Accounts.."
+                             aura:id="searchField"
+                             name="searchField"
+                             label="Account Name"
+                             onchange="{! c.onChange1 }" />
+            
+            <lightning:datatable
+                                 columns="{! v.columns }"
+                                 data="{! v.accList }"
+                                 keyField="id"
+								onrowselection="{! c.updateSelectedText }"/>
+            <lightning:button variant="brand" label="Fetch Contact Info" title="Fetch Contact Info" 
+                              onclick="{! c.handleClick }" />
+            <aura:if isTrue="{!v.ContInfo}">
+                <lightning:datatable
+                                     columns="{! v.cColumns }"
+                                     data="{! v.ContactList }"
+                                     keyField="id"/>
+            </aura:if>
+        </div>
+    </div>
+    
+</aura:component>

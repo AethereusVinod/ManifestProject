@@ -1,0 +1,7 @@
+<apex:page >
+    <apex:pageBlock title="Pic" >
+        <apex:pageBlockSection >
+            <apex:image value="{!URLfor($Resource.vfimagetest, 'cats/kitten1.jpg')}"/>.
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

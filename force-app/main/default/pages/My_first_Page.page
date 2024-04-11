@@ -1,0 +1,6 @@
+<apex:page controller="Nirvana">
+<apex:form >
+
+<apex:commandButton action="{!Save}" value="Save"/>
+</apex:form>
+</apex:page>

@@ -1,0 +1,22 @@
+<aura:component controller="createPersonRecord" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="createPerson" type="Person__c" default="{sobjectName:'Person__c',
+                                                                  Name:'',
+                                                                  Last_name__c : '',
+                                                                  Email__c:'',
+                                                                  Mobile_No__c:'',
+                                                                  DOB__c:'',
+                                                                  Date_of_Joining__c:'',
+                                                                  Description__c:''
+                                                                  }"/>
+    <div class="slds-p-around_x-small">
+        <lightning:input type="text"  label="First Name :" value="{!v.createPerson.Name}"/>
+        <lightning:input type="text"  label="Last Name :" value="{!v.createPerson.Last_name__c}"/>
+        <lightning:input type="email"  label="Email :" value="{!v.createPerson.Email__c}"/>
+        <lightning:input type="phone"  label="Mobile :" value="{!v.createPerson.Mobile_No__c}"/>
+        <lightning:input type="date"  label="DOB :" value="{!v.createPerson.DOB__c}"/>
+        <lightning:input type="date"  label="Date of Joining :" value="{!v.createPerson.Date_of_Joining__c}"/>
+        <lightning:input type="text"  label="Description :" value="{!v.createPerson.Description__c}"/><br/>
+        <lightning:button variant="brand" label="Create Person Record" title="Create Person Record" onclick="{! c.Create }" />
+        
+    </div>
+</aura:component>

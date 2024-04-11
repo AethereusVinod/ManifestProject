@@ -1,0 +1,272 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="FitnessAppController" >
+    <aura:attribute name="ContactObjct" type="Contact" default="{'sObjectType':'Contact',
+                                                                'FirstName':'',
+                                                                'LastName':'',
+                                                                'MobilePhone':'',
+                                                                'Email':'',
+                                                                'Birthdate':'',
+                                                                'Body_Fat__c':'',
+                                                                'Lean_Ratio__c':'',
+                                                                'Gender__c':'',
+                                                                'Current_Weight__c':'',
+                                                                'Target_Weight__c':'',
+                                                                'Height__c':'',
+                                                                'BMI__c':'',
+                                                                'BMI_Type__c':'',
+                                                                'Daily_Calorie_Maintainence__c':'',
+                                                                'Daily_Activity_Multiplier__c':'',
+                                                                'Total_calorie_needed__c':'',
+                                                                'Food_Calorie__c':'',
+                                                                'Calories_burn_by_exercise__c':''
+                                                                }"/>
+    <aura:attribute name="fieldMap" type="Map"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+    <aura:attribute name="returnConObject" type="Contact" />
+    <aura:attribute name="afterSubmit" type="Boolean" default="false"/>
+    <aura:attribute name="userType" type="String"/>
+    <aura:attribute name="forwardToCreateUser" type="Boolean" default="false"/>
+    <aura:attribute name="existingUserInfo" type="Boolean"/>
+    <aura:attribute name="userTypeCheck" type="Boolean" default="true"/>
+    <aura:attribute name="suggestions" type="Boolean" default="false"/>
+    <aura:attribute name="emailString" type="String"/>
+    <aura:attribute name="successMsg" type="String" /> 
+    <aura:attribute name="errorMsg" type="String" /> 
+    <aura:attribute name="TimeRequired" type="Integer" /> 
+    <aura:attribute name="wrapperList" type="FitnessAppController.clientDetails[]" default ="[]"/> 
+    
+    <!-- User type Check -->
+    <aura:if isTrue="{!v.userTypeCheck}">
+        <div class="slds-box slds-box_small">
+            <div class="slds-align_absolute-center">
+                <p>
+                    <b> Please let us know what type of user you are?</b><br></br><br></br>
+                    <lightning:notificationsLibrary aura:id="notifLib"/>
+                    <lightning:button variant="brand-outline" label="New User" onclick="{!c.newUser}" /><br></br><br></br>
+                    <lightning:button variant="brand-outline" label="Existing User" onclick="{!c.existingUser}"/><br></br>
+                </p>
+            </div>
+        </div>
+    </aura:if>
+    
+    <!-- Success Notification Toasts -->
+    <div class="slds-modal slds-fade-in-open errorDiv slds-hide" aura:id="successDiv">
+        <div class="demo-only" style="height: 8rem;">
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_success" role="alert">
+                    <div class=" slds-m-left_xx-large">
+                        <div class="slds-notify__content slds-m-left_small slds-align_absolute-center slds-m-left_xx-large">
+                            <lightning:icon alternativeText="Success" iconName="utility:success" size="small"
+                                            class="buttonColor slds-m-right_small" />
+                            <h2 class="slds-text-heading_small ">{!v.successMsg}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- Failed Notification Toasts -->
+    <div class="slds-modal slds-fade-in-open errorDiv slds-hide" aura:id="erroDiv">
+        <div class="demo-only" style="height: 8rem;">
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+                    <div class=" slds-m-left_xx-large">
+                        <div class="slds-notify__content slds-m-left_small slds-align_absolute-center slds-m-left_xx-large">
+                            <lightning:icon alternativeText="error" iconName="utility:error" size="small"
+                                            class="buttonColor slds-m-right_small" />
+                            <h2 class="slds-text-heading_small ">{!v.errorMsg}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Existing User Check for Email -->
+    <aura:if isTrue="{!v.existingUserInfo}">
+        <div class="slds-box slds-box_small" >
+            <div class="slds-align_absolute-center" >
+                <div class ="slds-m-left_large">
+                    <lightning:layout>
+                        <lightning:input type="string" name="email" aura:id="email" value="{!v.emailString}" label="Please enter your exisiting email Id: " />
+                    </lightning:layout>
+                    <lightning:button variant="brand" label="Submit" onclick="{!c.checkEmail}"/>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <!-- Create New User -->
+    <aura:if isTrue="{!v.forwardToCreateUser}">
+        <div class="slds-box slds-box_small">
+            <div class="slds-p-around_x-small">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="text" value="{!v.ContactObjct.FirstName}" label="First Name" placeholder="Enter your First Name" required = "true"/>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="text" value="{!v.ContactObjct.LastName}" label="Last Name" placeholder="Enter your Last Name" required = "true"/>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:select label="Gender" value="{!v.ContactObjct.Gender__c}"
+                                              onchange="{!c.handleOnChange}" required= "true">
+                                <aura:iteration items="{!v.fieldMap}" var="val" indexVar="key">
+                                    <option text="{!val.value}" value="{!val.key}" selected="{!val.key==v.ContactObjct.Gender__c}"/>
+                                </aura:iteration>
+                            </lightning:select> 
+                        </span>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="date" value="{!v.ContactObjct.Birthdate}" label="Birthdate" placeholder="Select your Date of Birth" required = "true"/>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="email" value="{!v.ContactObjct.Email}" label="Email" placeholder="Enter your Email address" required = "true"/> 
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="number" value="{!v.ContactObjct.MobilePhone}" label="MobilePhone" placeholder="Enter your Mobile Number" required = "true"/>
+                        </span>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="Decimal" value="{!v.ContactObjct.Daily_Activity_Multiplier__c}" label="Daily Activity Level Multiplier" placeholder="Enter your Daily Activity Level Multiplier" required = "true"/>
+                            <lightning:formattedUrl value="vinodsinghbeniwal-dev-ed--c.documentforce.com/servlet/servlet.ImageServer?id=0152v00000ILTnj&amp;oid=00D2v000001f5hh&amp;lastMod=1613039893000" label="Daily Activity Level Multiplier help!!" target="_blank"/>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="Number" value="{!v.ContactObjct.Body_Fat__c}" label="Body Fat %" placeholder="Enter your Body fat %" required = "true"/>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="Decimal" value="{!v.ContactObjct.Lean_Ratio__c}" label="Lean Factor" placeholder="Enter your Lean factor" required = "true"/>
+                            <lightning:formattedUrl value="vinodsinghbeniwal-dev-ed--c.documentforce.com/servlet/servlet.ImageServer?id=0152v00000ILTK7&amp;oid=00D2v000001f5hh&amp;lastMod=1612192478000" label="Lean factor help!!"  target="_blank"/>
+                        </span>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="Number" value="{!v.ContactObjct.Current_Weight__c}" label="Current Weight" placeholder="Enter your current weight" required = "true"/>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="Number" value="{!v.ContactObjct.Target_Weight__c}" label="Target Weight" placeholder="Enter your target weight" required = "true"/> 
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="Number" value="{!v.ContactObjct.Height__c}" label="Height(inches)" placeholder="Enter your height" required = "true"/>
+                        </span>
+                    </div> 
+                </div>
+                
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="Number" value="{!v.ContactObjct.Food_Calorie__c}" label="Your daily food calorie Intake" placeholder="Enter your daily consume" required = "true"/>
+                        </span>
+                    </div>    
+                    <div class="slds-col slds-size_1-of-3">
+                        <span>
+                            <lightning:input type="Number" value="{!v.ContactObjct.Calories_burn_by_exercise__c}" label="Daily calories burn by exercise" placeholder="Daily calorie burn" required = "true"/>
+                        </span>
+                    </div>  
+                </div>
+            </div>
+            <div class="slds-align_absolute-center" >
+                <div class="slds-box slds-box_x-small">
+                    <lightning:button variant="brand" label="Submit" onclick="{!c.doSave}"/>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <!-- Results After Providing Input-->
+    <aura:if isTrue="{!v.afterSubmit}">
+        <div class="slds-box">
+            <div class= "slds-align_absolute-center">
+                <p>
+                    Hi {!v.returnConObject.FirstName}, <br></br>
+                    Based on your inputs, Your <b> BMI is = {!v.returnConObject.BMI__c} </b>. <br></br>
+                    <b>Daily maintenance calorie</b> is = <b>{!v.returnConObject.Daily_Calorie_Maintainence__c}</b><br></br>
+                    You are in the <b>{!v.returnConObject.BMI_Type__c} category</b> and to achieve your target 
+                    goal of <b>{!v.returnConObject.Target_Weight__c}</b> to need to lose 
+                    <b>{!v.returnConObject.Weight_Difference__c}.</b>
+                    <br></br><br></br>
+                    You need Total Calorie Deficit - <b>{!v.returnConObject.Total_calorie_needed__c}</b> to achieve your goal.
+                    <br></br>
+                </p>
+            </div>
+            
+            <!-- Show Suggestion Button for Table-->
+            <div class="slds-align_absolute-center" >
+                <lightning:button variant="brand" label="Show Suggestions" onclick="{!c.suggestion}"/>
+            </div>
+        </div>
+        
+        <aura:if isTrue="{!v.suggestions}">
+            <!-- Construction of Table-->
+            <div class="slds-box">
+                <lightning:layout >
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-var-p-around_xx-large ">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Suggestion">Suggestion</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Maintenance - Deficit">Daily Calorie Intake</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Calorie Deficit /Day">Calorie Deficit /Day</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Time Required">Time Required (in Weeks)</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        
+                        <!-- Population of Table Data-->
+                        <aura:iteration items="{!v.wrapperList}" var="item">
+                            <tr>
+                                <td data-label="Suggestions">
+                                    <div class="slds-truncate" >Food calorie{!item.foodCalorie}-Calories burn by you by exercise {!item.dailyCalorieBurn} </div>
+                                </td>
+                                <td data-label="Maintenance-Deficit">
+                                    <div class="slds-truncate" >{!item.dailyCalorieIntake}</div>
+                                </td>
+                                <td data-label="CalorieDeficit /Day">
+                                    <div class="slds-truncate" >
+                                        <lightning:formattedNumber value="{!item.calorieDeficitPerDay}" maximumFractionDigits="0"/></div>
+                                </td>
+                                <td data-label="TimeRequired">
+                                    <div class="slds-truncate" >
+                                        <lightning:formattedNumber value="{!item.timeRequired}" maximumFractionDigits="2"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                        
+                    </table>
+                </lightning:layout>
+            </div>
+        </aura:if>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,54 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" controller="CaseFormController">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="CaseInfo" type="sObject" />
+    <aura:attribute name="CaseSelected" type="sObject"/>
+    <aura:attribute name="RecordType" type="boolean"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner />
+    </aura:if>
+    
+    <lightning:select aura:id="CaseList" value="{!v.CaseSelected}" onchange="{!c.handleOnChange}" 
+                      name="Case" label="Case" required="true">
+        <option value="">None</option>
+        <aura:iteration items="{!v.CaseInfo}" var="i" indexVar="key">
+            <option text="{!i.CaseNumber}" value="{!i.Id}" />
+        </aura:iteration>
+    </lightning:select> 
+    <aura:if isTrue="{!v.RecordType}">
+        <h2 class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container"> 
+            Create Child Case
+        </h2>
+        
+        <div class="slds-p-around_medium">
+            <lightning:recordEditForm objectApiName="Case"
+                                      onsubmit="{!c.handleSubmit}">
+                <lightning:messages />
+                <lightning:inputField fieldName="Status" />
+                <lightning:inputField fieldName="Subject" />
+                <lightning:inputField fieldName="Description" />
+                <lightning:inputField fieldName="AccountId" />
+                <lightning:inputField fieldName="ContactId" />
+                <lightning:inputField fieldName="ParentId " value="{!v.CaseSelected}"/>
+                <lightning:outputField fieldName="{!v.CaseSelected}" />
+                
+                <center>
+                    <lightning:button variant="Brand" 
+                                      label="Save" 
+                                      title="Save" 
+                                      type="submit"
+                                      />
+                    <lightning:button variant="Neutral" 
+                                      label="Cancel" 
+                                      title="Cancel" 
+                                      type="Cancel"
+                                      />
+                </center>
+            </lightning:recordEditForm>
+            
+        </div> 
+        
+    </aura:if>
+</aura:component>

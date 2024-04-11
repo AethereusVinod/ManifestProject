@@ -1,0 +1,6 @@
+<aura:component >
+	Hello World
+    <p>hello i am new here
+    </p>
+    <p><lightning:formattedText value="Hello World in this new lightning" /></p>
+</aura:component>

@@ -1,0 +1,50 @@
+<template>
+    <div class="bk">
+        <!-- <div style={backgroundStyle}> -->
+        <!-- <img src={backgroundImage}> -->
+        <div class="slds-m-around_medium">
+            <div class="slds-align_absolute-center">
+                <h1 class="slds-text-heading_large">Search for your YouTube Channel</h1><br />
+            </div>
+        </div>
+        <div onchange={onfilterChange}>
+            <div class="slds-align_absolute-center">
+                <lightning-radio-group name="radioGroup" label="Please select one of the filter" options={options}
+                    value={yvalue} type="radio"></lightning-radio-group>
+            </div>
+        </div>
+        <!-- <lightning:select aura:id="select" name="select" label="Select a pie" onchange={onChange}>
+            
+        </lightning:select> -->
+        <div onkeyup={handleKeyUp}>
+            <div class="slds-align_absolute-center">
+                <lightning-input name="enter-search" label="" type="search">
+                </lightning-input>
+            </div>
+        </div>
+        <!-- <template if:true={queryTerm}>
+            <div class="slds-align_absolute-center">
+                <h1 class="slds-text-heading_large"> Results for <b>"{queryTerm}"</b></h1>
+            </div>
+        </template> -->
+        <!-- <template if:false={Info}>
+            <lightning-tile>
+                <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
+                    <img alt="" src="/assets/images/avatar2.jpg" title="Lexee L. Jackson avatar" />
+                </span>
+
+                <div class="slds-tile__detail">
+                    <h3 class="slds-truncate"> We didn't found any update
+                    </h3>
+                </div>
+            </lightning-tile>
+        </template> -->
+        <template if:true={queryTerm}>
+            <c-my-You-Tube-Child searchkeyword={queryTerm} searchtype={yvalue}></c-my-You-Tube-Child>
+        </template>    
+        <template if:false={queryTerm}>
+            No search has been done
+        </template>
+    </div>
+    <!-- </div> -->
+</template>

@@ -1,0 +1,8 @@
+<aura:component  implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:searchInterface" access="global" >
+    <aura:attribute name="ContactRole" type="Contact[]"/>
+    <div class="search-input-wrapper">
+        <lightning:input type="Search" name="input1"  />
+        <lightning:button variant="brand" label="Contact Search" onclick="{! c.handleClick }" />
+        
+    </div>
+</aura:component>

@@ -1,0 +1,81 @@
+<aura:component implements = "force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <lightning:formattedDateTime value="1547250828000" year="2-digit" month="short" day="numeric"  hour="2-digit" minute="2-digit" timeZoneName="short" timeZone="UTC" />
+    
+    <lightning:avatar src="!$Resource.CN_Image" size="medium" variant="circle" initials="GI" fallbackIconName="standard:person_account" alternativeText="Grazitti Interactive"/>
+    
+    <lightning:button variant="destructive" onclick="{! c.handleShowActiveSectionName2 }" label="Renualt"/>
+    <lightning:button variant="destructive" onclick="{! c.handleShowActiveSectionName1 }" label="Toyota"/>
+    <lightning:buttonGroup>
+        <lightning:button variant="destructive" onclick="{! c.handleShowActiveSectionName3 }" label="Maruti"/>
+        <lightning:button variant="destructive" onclick="{! c.handleShowActiveSectionName4 }" label="Tata"/>
+        <lightning:button variant="destructive" onclick="{! c.handleShowActiveSectionName5 }" label="Mahindra"/>
+    </lightning:buttonGroup>
+    
+     
+    <lightning:accordion aura:id="accordion" allowMultipleSectionsOpen = "true" >
+        
+        
+        <lightning:accordionSection name="Renualt" label="Renualt">
+            <div>
+                
+                <p class ="One">Duster</p>
+                <p>Kwid</p>
+                
+            </div>
+        </lightning:accordionSection>
+        
+        <lightning:accordionSection name="Toyota" label="Toyota" class = "One" >
+            <div>
+                <p >
+                    <p class="One" style ="color : green;">Galanza</p>
+                    <p>Fortuner</p>
+                    <p>Itios</p>
+                </p>
+            </div>
+        </lightning:accordionSection>
+        
+        
+        <lightning:accordionSection name="Maruti" label="Maruti">
+            
+            <div>
+                <p class = "One">
+                    <p>Swift</p>
+                    <p>S-Cross</p>
+                    <p>Baleno</p>
+                </p>
+            </div>
+        </lightning:accordionSection>
+        
+        <lightning:accordionSection name="Tata" label="Tata">
+            <div>
+                <p class = "One">
+                    <p>Tiago</p>
+                    <p>Tigor</p>
+                    <p>Harrier</p>
+                </p>
+            </div>
+        </lightning:accordionSection>
+        
+        
+        <lightning:accordionSection name="Mahindra" label="Mahindra">
+            <div >
+                
+                <p class = "One">TUV100</p>
+                <p>Scorpio</p>
+                <p>Bulero</p>
+                
+            </div>
+            
+           
+        </lightning:accordionSection>
+        
+    </lightning:accordion>
+     <aura:attribute name="options" type="List" default="[
+    {'label': 'yes', 'value': 'Yes'},
+    {'label': 'No', 'value': 'No'}
+    ]" />
+    <aura:attribute name="value" type="List" default="option1"/>
+
+   
+</aura:component>

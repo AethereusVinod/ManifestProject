@@ -1,0 +1,23 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <template if:true={clicked}>
+        <div class="slds-align_absolute-center ">
+            <lightning-button icon-name="utility:sync" variant="bare" class="slds-m-left_xx-small" label="Check Weather"
+                onclick={refreshWeather}>
+            </lightning-button>
+        </div>
+    </template>
+    <template if:true={Information}>
+        <div class="slds-box">
+            <lightning-tile label={Information.app_temp} type="media">{Information.app_temp}</lightning-tile>
+            <lightning-tile label={Information.temp} type="media">{Information.temp} </lightning-tile>
+            <!-- <lightning-tile label={Information.weather.icon} type="media"></lightning-tile> -->
+            <lightning-tile label={Information.aqi} type="media">{Information.aqi}</lightning-tile>
+            <lightning-tile label={Information.pod} type="media">{Information.pod}</lightning-tile>
+
+        </div>   
+    </template>
+    <template if:false={results}>
+        No results
+    </template>
+</template>

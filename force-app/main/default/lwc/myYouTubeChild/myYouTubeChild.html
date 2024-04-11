@@ -1,0 +1,47 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <template if:true={results}>
+        <div class="slds-align_absolute-center">
+            <h1 class="slds-text-heading_large"> No. of Results found for <b>"{searchkeyword}"</b> filter {searchtype} :
+                <b>{total}</b>
+            </h1>
+        </div>
+        <div class="slds-align_absolute-center">
+            <h1 class="slds-text-heading_medium"> No of results per page: <b>{resultsPerPage}</b></h1>
+        </div>
+        <lightning-card title="Channels">
+            <template for:each={results.items} for:item="res">
+                <div class="slds-p-around_medium lgc-bg" key={res.snippet.channelTitle}>
+                <lightning-tile label={res.snippet.channelTitle} type="media" >
+                    <lightning-avatar slot="media" src={res.snippet.thumbnails.high.url}></lightning-avatar>
+                    <ul class="slds-list_vertical">
+                        <li class="slds-item"><b>Title</b> : {res.snippet.title}</li>
+                        <li class="slds-item"><b>Description</b> : {res.snippet.description}</li>
+                    </ul>
+                </lightning-tile>
+                </div>
+            </template>
+            <div class="slds-align_absolute-center ">
+                <template if:true={previouspage}>
+                <div onclick={prevpagecall}>
+                    <div class=slds-var-p-around_x-large>
+                        <lightning-button icon-name="utility:back" title="Previous">
+                        </lightning-button>
+                    </div>
+                </div>
+            </template>
+                <div onclick={nextpagecall}>
+                    <div class=slds-var-p-around_x-large>
+                        <lightning-button icon-name="utility:forward" title="Next">
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+    <template if:false={results}>
+        <div class="slds-align_absolute-center">
+            <h1 class="slds-text-heading_large"> No Results found for <b>"{searchkeyword}"</b> filter {searchtype}</h1>
+        </div>
+    </template>
+</template>

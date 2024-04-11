@@ -1,0 +1,32 @@
+<aura:component controller="personController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="personlist" type="Person__c[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-p-around_small">
+        <div class="slds-grid slds-wrap">
+            <aura:iteration items="{!v.personlist}" var="per">
+                <div class="slds-col slds-size_1-of-4"> 
+                    <div class="slds-p-around_small">
+                        <div class="slds-box ">
+                            <div class="slds-theme_default">
+                                <lightning:tile label="info" href="{!'https://vinodsinghbeniwal-dev-ed.my.salesforce.com/'+per.Id}" >
+                                    <lightning:icon iconName="standard:groups"/> <br/>
+                                    {!per.Name}<br/>
+                                    {!per.Last_name__c}<br/>
+                                    {!per.Mobile_No__c}<br/>
+                                    {!per.Email__c}<br/>
+                                    {!per.DOB__c}<br/>
+                                    {!per.Date_of_Joining__c}<br/>
+                                    {!per.Description__c}<br/>
+                                </lightning:tile>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aura:iteration>
+           <!-- <div>
+                <c:CreatePerson/>
+            </div> -->
+        </div>
+    </div>
+</aura:component>

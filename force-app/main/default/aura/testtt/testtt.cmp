@@ -1,0 +1,32 @@
+<!--Sample.cmp-->
+<aura:component controller="SampleAuraController" implements="flexipage:availableForAllPageTypes,force:appHostable">
+     
+    <!--Declare Attributes-->
+    <aura:attribute name="industryMap" type="Map"/>
+    <aura:attribute name="acc" type="Account" default="{'sobjectType':'Account', 
+                                                       'Name': '',
+                                                       'AccountNumber': '',
+                                                       'Email': '',
+                                                       'Phone': '', 
+                                                       'Industry': ''}"/>
+     
+    <!--Declare Handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+     
+    <!--Component Start-->
+    <div class="slds-m-around--xx-large">
+        <div class="container-fluid">
+            
+                <lightning:select aura:id="industryPicklist" value="{!v.acc.Industry}" onchange="{!c.handleCompanyOnChange}" name="industryPicklist" label="Industry" required="true">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.industryMap}" var="ind" indexVar="key">
+                        <option text="{!ind.value}" value="{!ind.key}" selected="{!ind.key==v.acc.Industry}" />
+                    </aura:iteration>
+                </lightning:select>
+            </div>
+        </div>
+        <br/>
+        <lightning:button variant="brand" label="Submit" onclick="{!c.handleAccountSave}" />              
+    
+    <!--Component End-->
+</aura:component>

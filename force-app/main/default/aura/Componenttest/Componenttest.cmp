@@ -1,0 +1,39 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <div class="slds-p-around_small">
+         <div class="demo-only" style="width:280px; height:220px" >
+            <ul class="slds-has-dividers_around-space">
+                <ul class="slds-list_horizontal">
+                    <li class="slds-item" style=" margin-right: 20px;border:1px solid grey;">
+                        <lightning:tile  label="Cylance V Group"  href="https://vinodsingh-developer-edition.ap15.force.com/cylance">
+                            <lightning:icon class="iconcolor" iconName="standard:groups" alternativeText="Groups" />
+                            <p class="info"> its a public group used for generic production discussions
+                            </p>
+                            <lightning:button variant="base" label="view more" title="view more" onclick="{! c.handleClick }"/>
+                        </lightning:tile>
+                    </li>
+                    
+                    <li class="slds-item" style=" margin-right: 20px;border:1px solid grey;">
+                        
+                        <lightning:tile label="Cylance V Group" href="https://vinodsingh-developer-edition.ap15.force.com/cylance">
+                            <lightning:icon class="iconcolor" iconName="standard:groups" alternativeText="Groups" />
+                            <p class="info"> its a public group used for generic production discussions
+                            </p>
+                            <lightning:button variant="base" label="view more" title="view more" onclick="{! c.handleClick }"/>
+                        </lightning:tile>
+                        
+                    </li>
+                    
+                    <li class="slds-item" style=" margin-right: 20px;border:1px solid grey;">
+                        <lightning:tile label="Cylance V Group" href="https://vinodsingh-developer-edition.ap15.force.com/cylance">
+                            <lightning:icon class="iconcolor" iconName="standard:groups" alternativeText="Groups" />
+                            <p class="info"> its a public group used for generic production discussions
+                            </p>
+                            <lightning:button variant="base" label="view more" title="view more" onclick="{! c.handleClick }"/>
+                        </lightning:tile>
+                    </li>
+                </ul>
+            </ul>  
+        </div> 
+        
+    </div>
+</aura:component>

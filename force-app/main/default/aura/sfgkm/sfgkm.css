@@ -1,0 +1,13 @@
+.THIS.para {
+    text-shadow: 3px 2px blue;
+}
+
+.THIS .para2 {
+    color: red;
+    font-style: italic;
+}
+
+.THIS .para3 {
+    color: white;
+    font-style: bold;
+}

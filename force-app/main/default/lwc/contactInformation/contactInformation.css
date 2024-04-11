@@ -1,0 +1,22 @@
+.compactLayout3{
+    text-align: right;
+    margin-right: 10px;;
+}
+
+.compactLayout1{
+margin-left: 10px;
+}
+
+.selected{
+    background-color: bisque;
+    padding-left: 12px;
+    padding-top: 12px;
+}
+
+.slds-float_right{
+    margin-right: 1cm;
+}
+
+.slds-avatar{
+    margin-left: 12px;
+}

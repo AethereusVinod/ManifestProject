@@ -1,0 +1,11 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<p class="para">Hi to new world</p>
+    <div>
+    <p class="para2"> hey this is the 2nd Session </p>
+        </div>
+    <div><p class="para3"> This is new paragraph   </p></div>
+    <p> <lightning:formattedText value="I like to email io@salesforce.com" /> </p>
+    <button>HTML Button</button>
+    <lightning:button variant="brand" label="Heyy!!" title="ur" onclick="{! c.handleClick }" />
+
+</aura:component>
